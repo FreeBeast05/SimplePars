@@ -46,6 +46,6 @@ public class Department {
     public String toString() {
         return "Department{" +
                 "title='" + title + '\'' +
-                '}';
+                '}'+ listEmployeers.toString();
     }
 }
