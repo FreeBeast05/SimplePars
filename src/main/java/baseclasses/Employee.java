@@ -1,5 +1,8 @@
-package daseclasses;
+package baseclasses;
 
+
+import baseclasses.correctnessdata.ValidEmployee;
+import exceptions.NotValidDataException;
 
 import java.math.BigDecimal;
 
@@ -39,11 +42,22 @@ public class Employee {
     }
 
     public void setSecondName(String secondName) {
-        this.secondName = secondName;
+        try {
+            ValidEmployee.validNameOrSecondName(secondName);
+            this.secondName = secondName;
+        } catch (NotValidDataException e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        try {
+            ValidEmployee.validNameOrSecondName(secondName);
+            this.firstName = firstName;
+        } catch (NotValidDataException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void setSalary(BigDecimal salary) {
