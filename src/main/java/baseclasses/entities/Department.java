@@ -1,4 +1,4 @@
-package baseclasses;
+package baseclasses.entities;
 
 
 import java.math.BigDecimal;

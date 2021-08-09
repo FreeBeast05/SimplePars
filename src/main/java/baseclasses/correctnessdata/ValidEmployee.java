@@ -1,16 +1,11 @@
 package baseclasses.correctnessdata;
 
-import baseclasses.Department;
-import baseclasses.Employee;
 import exceptions.NotValidDataException;
 import exceptions.NotValidSalaryException;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Formatter;
-import java.util.List;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 public class ValidEmployee {
 

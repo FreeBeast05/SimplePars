@@ -1,8 +1,6 @@
-package baseclasses;
+package baseclasses.action;
 
-import baseclasses.action.CreateMapDepartment;
-import baseclasses.action.ShowAllDepartmentAndEmployee;
-import baseclasses.action.TransfersEmployee;
+import baseclasses.entities.Department;
 import baseclasses.correctnessdata.ValidParameter;
 
 import java.io.*;

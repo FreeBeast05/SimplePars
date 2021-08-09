@@ -1,7 +1,7 @@
 package baseclasses.action;
 
-import baseclasses.Department;
-import baseclasses.Employee;
+import baseclasses.entities.Department;
+import baseclasses.entities.Employee;
 
 import java.util.Map;
 
