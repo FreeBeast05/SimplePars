@@ -20,7 +20,8 @@ public class TransfersGroupEmployees {
                     BigDecimal oldAvgSalaryIn2 = department2.getAvgSalary();
                     int numberOfEmployeesIn2 = department2.getListEmployers().size();
                     List<List<Employee>> setSubsets = GenerateSubsets.generateSetOfAllSubsets(employeeList1);
-                    Map<List<Employee>, List<BigDecimal>> goodSubsets = findGoodGroup(setSubsets, oldSumSalaryIn1, oldAvgSalaryIn1, oldSumSalaryIn2, oldAvgSalaryIn2, numberOfEmployeesIn1, numberOfEmployeesIn2);
+                    Map<List<Employee>, List<BigDecimal>> goodSubsets = findGoodGroup(setSubsets, oldSumSalaryIn1, oldAvgSalaryIn1,
+                                                                        oldSumSalaryIn2, oldAvgSalaryIn2, numberOfEmployeesIn1, numberOfEmployeesIn2);
                     if (!goodSubsets.isEmpty()) {
                         WritePossibleTransfers.writeTransfers(department1, department2, oldAvgSalaryIn1,
                                 oldAvgSalaryIn2, goodSubsets);

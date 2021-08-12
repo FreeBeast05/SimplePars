@@ -9,7 +9,8 @@ import java.util.regex.Pattern;
 
 public class ValidEmployee {
 
-    public static void validAllParameter(String firstName, String secondName, String salaryStr) throws NotValidDataException {
+    public static void validAllParameter(String firstName, String secondName, String salaryStr)
+            throws NotValidDataException {
         validSalary(salaryStr, firstName, secondName);// валидна ли зарплата
         validNameOrSecondName(firstName); // валидно ли имя
         validNameOrSecondName(firstName); // валидна ли фамилия

@@ -21,7 +21,10 @@ public class WritePossibleTransfers {
             int i =1;
             for (List<Employee> employee: goodSubsets.keySet()){
                 writer.write("Группа "+ i++ + ":" + "\n");
-                String groupEmp = employee.stream().map(s -> s.getFirstName()+" " + s.getSecondName()).reduce("",(s, s2) -> s+ s2+"\n").trim();
+                String groupEmp = employee.stream()
+                        .map(s -> s.getFirstName()+" " + s.getSecondName())
+                        .reduce("",(s, s2) -> s+ s2+"\n")
+                        .trim();
                 writer.write(groupEmp+"\n");
                 writer.write("Средняя зарплата в старом отделе:" +"\n \t \t" +"до перевода - "+ oldAvgSalaryIn1+"\n \t \t" + "после перевода - " + goodSubsets.get(employee).get(0) + "\n");
                 writer.write("Средняя зарплата в новом отделе:" +"\n \t \t" +"до перевода - "+ oldAvgSalaryIn2+"\n \t \t" + "после перевода -  " + goodSubsets.get(employee).get(1)  +"\n\n");
