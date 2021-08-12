@@ -1,9 +1,6 @@
 package baseclasses.entities;
 
 
-import baseclasses.correctnessdata.ValidEmployee;
-import exceptions.NotValidDataException;
-
 import java.math.BigDecimal;
 
 public class Employee {
@@ -37,28 +34,18 @@ public class Employee {
         return salary;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
 
-    public void setSecondName(String secondName) {
-        try {
-            ValidEmployee.validNameOrSecondName(secondName);
-            this.secondName = secondName;
-        } catch (NotValidDataException e) {
-            System.out.println(e.getMessage());
-        }
-
-    }
-
-    public void setFirstName(String firstName) {
-        try {
-            ValidEmployee.validNameOrSecondName(secondName);
-            this.firstName = firstName;
-        } catch (NotValidDataException e) {
-            System.out.println(e.getMessage());
-        }
-    }
 
     public void setSalary(BigDecimal salary) {
         this.salary = salary;

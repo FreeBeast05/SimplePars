@@ -1,42 +1,18 @@
 package baseclasses.action;
 
-import baseclasses.entities.Department;
 import baseclasses.correctnessdata.ValidParameter;
+import baseclasses.entities.Department;
 
-import java.io.*;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Main {
+    public static String path2;
     public static void main(String[] args) {
-
         String[] path = ValidParameter.validInputParameter(args);
+        path2 = path[1];
         String coding = "Cp1251";
-        Map<String, Department> mapDepartment = new HashMap<>();
-
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(path[0]), coding))) {
-            String s;
-            while ((s = br.readLine()) != null) {
-                CreateMapDepartment.createMapDepartment(s, mapDepartment);
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("Файл не найден");
-        } catch (UnsupportedEncodingException e) {
-            System.out.println("Кодировка файла не известна");
-        } catch (IOException e) {
-            System.out.println("Возникла ошибка ввода");
-        }
+        Map<String, Department> mapDepartment = CreateMapDepartment.createMapDepartment(path, coding) ;
         ShowAllDepartmentAndEmployee.showMap(mapDepartment);
-        List<String> possibleTransfers = TransfersEmployee.transfers(mapDepartment);
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(path[1]))) {
-            for (String value : possibleTransfers) {
-                writer.write(value + "\n");
-            }
-        } catch (IOException e) {
-            System.out.println("Возникла ошибка ввода");
-        }
-
-
+        TransfersGroupEmployees.transfersGroup(mapDepartment);
     }
 }
