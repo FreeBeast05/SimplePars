@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 public class Department {
     private String title;
@@ -52,5 +53,18 @@ public class Department {
         return "Department{" +
                 "title='" + title + '\'' +
                 '}' + listEmployers.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Department that = (Department) o;
+        return title.equals(that.title) && listEmployers.equals(that.listEmployers);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, listEmployers);
     }
 }
