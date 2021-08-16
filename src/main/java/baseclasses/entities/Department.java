@@ -10,10 +10,22 @@ import java.util.Objects;
 public class Department {
     private String title;
     private List<Employee> listEmployers = new LinkedList<>();
+    private boolean flagRecount = false;
+    private  BigDecimal sumSalaryAllEmployee;
+    private BigDecimal avgSalary;
 
 
     public BigDecimal getSumSalaryAllEmployee() {
-        return listEmployers.stream().map(Employee::getSalary).reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
+        if (flagRecount) {
+            avgSalary = getAvgSalaryForSublist(listEmployers);
+            sumSalaryAllEmployee = getSumSalaryForSublist(listEmployers);
+            flagRecount = false;
+        }
+        return sumSalaryAllEmployee;
+    }
+
+    public static BigDecimal getSumSalaryForSublist(List<Employee> sublist){
+        return sublist.stream().map(Employee::getSalary).reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
     }
 
 
@@ -34,17 +46,30 @@ public class Department {
     }
 
     public void setListEmployers(List<Employee> listEmployers) {
+        flagRecount = true;
         this.listEmployers = listEmployers;
     }
 
-    public List<Employee> addEmployer(Employee employee) {
+    public void addEmployer(Employee employee) {
+        flagRecount = true;
         this.listEmployers.add(employee);
-        return listEmployers;
     }
 
     public BigDecimal getAvgSalary() {
-        return listEmployers.size() == 0 ? BigDecimal.ZERO : getSumSalaryAllEmployee().divide(new BigDecimal(listEmployers.size()), 2, RoundingMode.CEILING);
+        if (flagRecount) {
+            sumSalaryAllEmployee = listEmployers.stream().map(Employee::getSalary).reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
+            avgSalary = getAvgSalaryForSublist(listEmployers);
+            flagRecount = false;
+        }
+        return avgSalary;
+    }
 
+    public static BigDecimal getAvgSalaryForSublist( List<Employee> sublist){
+        BigDecimal sumForSubset = sublist.stream().map(Employee::getSalary).reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
+            if (sumForSubset.compareTo(BigDecimal.ZERO) == 0){
+                return BigDecimal.ZERO;
+            }
+            else return sumForSubset.divide(BigDecimal.valueOf(sublist.size()), 2, RoundingMode.HALF_UP);
     }
 
 

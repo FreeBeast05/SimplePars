@@ -1,6 +1,7 @@
 package baseclasses.correctnessdata;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class ValidParameter {
@@ -21,6 +22,13 @@ public class ValidParameter {
                 else {
                     System.out.println("Обновление данных не произведено");
                     System.exit(1);
+                }
+            }
+            else {
+                try {
+                    boolean tr = file.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         }

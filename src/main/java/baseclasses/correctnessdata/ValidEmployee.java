@@ -24,7 +24,7 @@ public class ValidEmployee {
 
     private static void validSalary(String salary, String firstName, String secondName) {
         BigDecimal bigDecimalSalary = new BigDecimal(salary);
-        if (!bigDecimalSalary.setScale(2, RoundingMode.CEILING).equals(new BigDecimal(salary))){
+        if (!(bigDecimalSalary.setScale(2, RoundingMode.CEILING).compareTo(new BigDecimal(salary))==0)){
             throw new NotValidSalaryException(String.format("Введена некорректая зарплата сотрудника %s %s", firstName, secondName));
         }
         if (bigDecimalSalary.compareTo(BigDecimal.ZERO) < 0) {
