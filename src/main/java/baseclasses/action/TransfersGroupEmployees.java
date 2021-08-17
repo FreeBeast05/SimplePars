@@ -3,7 +3,6 @@ package baseclasses.action;
 import baseclasses.entities.Department;
 import baseclasses.entities.Employee;
 import baseclasses.entities.GoodTransfer;
-import baseclasses.entities.OldAvgSalary;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -18,22 +17,22 @@ public class TransfersGroupEmployees {
         for (Department department1 : departmentMap.values()) {
             BigDecimal oldAvgSalaryIn1 = department1.getAvgSalary();
             List<Employee> employeeList1 = department1.getListEmployers();
-            List<GoodTransfer> goodTransfers = new ArrayList<>();
+            List<GoodTransfer> transfersAfterOneFilter = new ArrayList<>();
             Set<List<Employee>> setSubsets = GenerateSubsets.generateSetOfAllSubsets(employeeList1);
             Set<List<Employee>> newSetSubsets = setSubsets.stream()
-                    .filter(s -> filterSubsets(department1, s, oldAvgSalaryIn1, goodTransfers))
+                    .filter(s -> filterSubsets(department1, s, oldAvgSalaryIn1, transfersAfterOneFilter))
                     .collect(Collectors.toSet());
             for (Department department2 : departmentMap.values()) {
                 if (!department1.equals(department2)) {
                     BigDecimal oldAvgSalaryIn2 = department2.getAvgSalary();
                     Set<List<Employee>> goodSubsets = newSetSubsets.stream()
-                            .filter(s -> filterSubsetsForAddEmp(department2, s, oldAvgSalaryIn2, goodTransfers))
+                            .filter(s -> filterSubsetsForAddEmp(department2, s, oldAvgSalaryIn2, transfersAfterOneFilter))
                             .collect(Collectors.toSet());
-                    Set<GoodTransfer> good = goodTransfers.stream()
+                    Set<GoodTransfer> goodTransfers = transfersAfterOneFilter.stream()
                             .filter(s -> s.getNewAvgSalaryDep2().compareTo(BigDecimal.valueOf(-1)) != 0)
                             .collect(Collectors.toSet());
-                    if (good.size() != 0) {
-                        WritePossibleTransfers.writeTransfers(department1, department2, new OldAvgSalary(oldAvgSalaryIn1, oldAvgSalaryIn2), good);
+                    if (goodTransfers.size() != 0) {
+                        WritePossibleTransfers.writeTransfers(department1, department2, goodTransfers);
                     }
                 }
             }
@@ -47,7 +46,7 @@ public class TransfersGroupEmployees {
                 .collect(Collectors.toList()));
         boolean result = avgSalaryForSubsets.compareTo(oldAvgSalary) > 0;
         if (result) {
-            goodTransfersList.add(new GoodTransfer(subsets, avgSalaryForSubsets, BigDecimal.valueOf(-1)));
+            goodTransfersList.add(new GoodTransfer(subsets, avgSalaryForSubsets, BigDecimal.valueOf(-1), oldAvgSalary, BigDecimal.valueOf(-1)));
         }
         return result;
     }
@@ -63,6 +62,7 @@ public class TransfersGroupEmployees {
             for (GoodTransfer transfer : goodTransfersList) {
                 if (transfer.getSubListEmployee().equals(subsets)) {
                     transfer.setNewAvgSalaryDep2(avgSalaryForSubsetsAndDep);
+                    transfer.setOldAvgSalaryDep2(oldAvgSalary);
                 }
             }
         }

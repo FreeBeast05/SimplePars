@@ -1,9 +1,6 @@
 package baseclasses.action;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class GenerateSubsets {
     static <T> Set<List<T>> generateSetOfAllSubsets(List<T> list) {
@@ -14,7 +11,7 @@ public class GenerateSubsets {
             return ones;
         }
         Set<List<T>> sublists = generateSetOfAllSubsets(list.subList(1, list.size()));
-        Set<List<T>> copy = new LinkedHashSet<>(sublists.size());
+        Set<List<T>> copy = new HashSet<>(sublists.size());
         for (List<T> sublist : sublists) {
             List<T> newList = new ArrayList<>(sublist);
             newList.add(list.get(0));
